@@ -1,2 +1,0 @@
-B001, Giant, Taiwan
-B002, Trek, USA
