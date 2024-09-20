@@ -8,9 +8,9 @@ public class ProductManagement {
         ProductList productL = new ProductList();
         Scanner scanner = new Scanner(System.in);
         
-        String bFile = "C:\\Users\\ACER\\Desktop\\Java\\BikeStoresManagementSystem\\src\\Brand.txt";
-        String cFile = "C:\\Users\\ACER\\Desktop\\Java\\BikeStoresManagementSystem\\src\\Category.txt";
-        String pFile = "C:\\Users\\ACER\\Desktop\\Java\\BikeStoresManagementSystem\\src\\Product.txt";
+        String bFile = "src/Brand.txt";
+        String cFile = "src/Category.txt";
+        String pFile = "src/Product.txt";
         
         productL.addToBrand(bFile);
         productL.addToCategory(cFile);
