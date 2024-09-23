@@ -8,6 +8,7 @@ import java.time.YearMonth;
 import static laptoprammanagement.myTool.*;
 
 public class RAMList extends ArrayList<RAMItems> {
+
     Scanner sc = new Scanner(System.in);
     ArrayList<RAMItems> rList;
     ArrayList<RAMModule> module;
@@ -38,9 +39,9 @@ public class RAMList extends ArrayList<RAMItems> {
 
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Not found: " + filename);
+            System.out.println("Not found " + filename);
         } catch (IOException e) {
-            System.out.println("Error reading" + filename);
+            System.out.println("Error reading " + filename);
         }
     }
 
@@ -60,6 +61,30 @@ public class RAMList extends ArrayList<RAMItems> {
         return true;
     }
 
+    //check valid quantity
+    private int validQuantity() {
+        int quantity = 0;
+        boolean valid = false;
+
+        do {
+            System.out.println("Enter quantity ");
+            try {
+                quantity = sc.nextInt();
+                sc.nextLine();  // Consume the newline character
+                if (quantity <= 0) {
+                    System.out.println("Please enter a valid quantity ");
+                } else {
+                    valid = true;  // Input is valid, exit loop
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number for quantity.");
+                sc.nextLine();  // Clear the invalid input
+            }
+        } while (!valid);
+
+        return quantity;
+    }
+
     // Check if type is valid
     private boolean isValidType(String type) {
         for (RAMModule x : module) {
@@ -73,7 +98,7 @@ public class RAMList extends ArrayList<RAMItems> {
     // check if bus is valid
     private boolean isValidBus(String type, String bus) {
         if (!isValidType(type)) {
-            System.out.println("Invalid RAM module type");
+            System.out.println("Invalid RAM module type ");
             return false;
         }
         //get index for checking
@@ -84,7 +109,7 @@ public class RAMList extends ArrayList<RAMItems> {
             }
         }
         if (index == -1) {
-            System.out.println("Not found but pass the check");
+            System.out.println("Not found but pass the check ");
             return false;
         }
 //        System.out.println("Checking BUs " + bus);   //debug
@@ -99,7 +124,7 @@ public class RAMList extends ArrayList<RAMItems> {
 
     //Display type for user
     private void displayType() {
-        System.out.println("Available RAM type: ");
+        System.out.println("Available RAM type ");
         for (RAMModule x : module) {
             System.out.println(x.getType());
         }
@@ -120,7 +145,7 @@ public class RAMList extends ArrayList<RAMItems> {
         displayType();
         String type;
         do {
-            type = readStr("Enter RAM module TYPE: ").toUpperCase();
+            type = readStr("Enter RAM module TYPE ").toUpperCase();
             if (!isValidType(type)) {
                 System.out.println("Please enter valid type !!");
             }
@@ -171,25 +196,21 @@ public class RAMList extends ArrayList<RAMItems> {
         } while (brand.isEmpty());
         item.setBrand(brand);
 
-        do {
-            System.out.println("Enter quantity: ");
-            quantity = sc.nextInt();
-            sc.nextLine();
-            if (quantity <= 0) {
-                System.out.println("Please enter valid quantity");
-            }
-        } while (quantity <= 0);
+        quantity = validQuantity();
         item.setQuantity(quantity);
 
         int month, year;
         do {
-            month = readInt("Enter month:");
-            year = readInt("Enter year");
-            if (month < 1 || month > 12) {
-                System.out.println("Please enter valid date");
+            System.out.println("Enter month");
+            month = sc.nextInt();
+            sc.nextLine();
+            System.out.println("Enter year");
+            year = sc.nextInt();
+            sc.nextLine();
+            if (month < 1 || month > 12 || year < 0 || year > 9999) {
+                System.out.println("Please enter valid date ");
             }
-        } while (month < 1 || month > 12);
-
+        } while (month < 1 || month > 12 || year < 0 || year > 9999);
         YearMonth prod_date = YearMonth.of(year, month);
         item.setProduct_year(prod_date);
         item.setCheckActive(true);
@@ -208,16 +229,24 @@ public class RAMList extends ArrayList<RAMItems> {
     }
 
     public void searchByBus() {
-        String type = getType();
-        String searchName = getBus(type);
         List<RAMItems> search = new ArrayList<>();
+        String busSpeed;
+        
+        do {
+            busSpeed = readStr("Enter bus speed");
+            if (!busSpeed.matches("\\d+")) { // Matches only digits
+                System.out.println("Invalid bus speed. Please enter a valid number");
+            }
+        } while (!busSpeed.matches("\\d+"));
+        int busSpeedInt = Integer.parseInt(busSpeed);
+        String searchName = busSpeedInt + "MHZ";
         for (RAMItems x : rList) {
-            if (x.getType().equals(type) && x.getBus().equalsIgnoreCase(searchName)) {
+            if (x.getBus().equalsIgnoreCase(searchName)) {
                 search.add(x);
             }
         }
         if (search.isEmpty()) {
-            System.out.println("No RAM modules found " + type + "and bus speed " + searchName);
+            System.out.println("No RAM modules found for bus speed " + searchName);
             return;
         }
         System.out.println("RAM modules matching BUS speed");
@@ -227,7 +256,7 @@ public class RAMList extends ArrayList<RAMItems> {
     }
 
     public void searchByBrand() {
-        String brand = readStr("Enter brand: ");
+        String brand = readStr("Enter brand ");
         for (RAMItems x : rList) {
             if (x.getBrand().equalsIgnoreCase(brand)) {
                 System.out.println(x.getCode() + ", " + x.getBrand() + ", " + x.getProduct_year() + ", " + x.getQuantity());
@@ -236,9 +265,9 @@ public class RAMList extends ArrayList<RAMItems> {
     }
 
     public void updateProduct() {
-        String code = readStr("Enter code :");
+        String code = readStr("Enter code ");
         RAMItems itemUpdate = null;
-        
+
         //Find the item with the code
         for (RAMItems x : rList) {
             System.out.println(x.getCode());
@@ -257,7 +286,7 @@ public class RAMList extends ArrayList<RAMItems> {
         displayType();
         String newType;
         do {
-            newType = readStr("Enter new Type: ").toUpperCase();
+            newType = readStr("Enter new Type ").toUpperCase();
             if (newType.isEmpty()) {
                 break;
             }
@@ -274,7 +303,7 @@ public class RAMList extends ArrayList<RAMItems> {
         displayBusType(itemUpdate.getType());
         String newBus;
         do {
-            newBus = readStr("Enter new bus: ");
+            newBus = readStr("Enter new bus ");
             if (newBus.isEmpty()) {
                 break;
             }
@@ -289,7 +318,7 @@ public class RAMList extends ArrayList<RAMItems> {
         }
 
         //Update brand
-        String newBrand = readStr("Enter new Brand: ");
+        String newBrand = readStr("Enter new Brand ");
         if (!newBrand.isEmpty()) {
             itemUpdate.setBrand(newBrand);
             System.out.println("Success");
@@ -299,7 +328,7 @@ public class RAMList extends ArrayList<RAMItems> {
         String newQuantityStr;
         int intQuantity = -1;
         do {
-            newQuantityStr = readStr("Enter new Quantity: ");
+            newQuantityStr = readStr("Enter new Quantity ");
             if (newQuantityStr.isEmpty()) {
                 break;
             }
@@ -353,7 +382,7 @@ public class RAMList extends ArrayList<RAMItems> {
             System.out.println("RAM item marked as inactive.");
         }
     }
-    
+
     public void displayAll() {
         // Store active items to list
         List<RAMItems> activeItems = new ArrayList<>();
@@ -362,20 +391,20 @@ public class RAMList extends ArrayList<RAMItems> {
                 activeItems.add(x);
             }
         }
-        
+
         //Sort items by type, bus, brand
         activeItems.sort(Comparator.comparing(RAMItems::getType).thenComparing(RAMItems::getBus).thenComparing(RAMItems::getBrand));
-        
+
         for (RAMItems x : activeItems) {
             System.out.println(x);
         }
     }
-    
+
     public void saveToFile(String filename) {
         //Add activeItems to List 
         List<RAMItems> activeItems = new ArrayList<>();
-        for(RAMItems x : rList) {
-            if(x.isCheckActive()) {
+        for (RAMItems x : rList) {
+            if (x.isCheckActive()) {
                 activeItems.add(x);
             }
         }
@@ -387,10 +416,10 @@ public class RAMList extends ArrayList<RAMItems> {
             System.out.println("Saved!");
         }
     }
-    
+
     public void loadFromFile(String filename) {
         try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
-            List<RAMItems>  loadedItem = (List<RAMItems>) input.readObject();
+            List<RAMItems> loadedItem = (List<RAMItems>) input.readObject();
             rList.clear();
             rList.addAll(loadedItem);
             System.out.println("Loaded successfully");
@@ -398,5 +427,5 @@ public class RAMList extends ArrayList<RAMItems> {
             throw new RuntimeException(e);
         }
     }
-    
+
 }

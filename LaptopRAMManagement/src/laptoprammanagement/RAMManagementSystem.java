@@ -12,8 +12,8 @@ public class RAMManagementSystem {
         RAMList ramList = new RAMList();
         String moduleFile = "D:\\Github\\Lab211\\LaptopRAMManagement\\src\\laptoprammanagement\\RAM_data.txt";
         String RAMModules = "D:\\Github\\Lab211\\LaptopRAMManagement\\src\\laptoprammanagement\\RAMModules.dat";
-        ramList.loadRAMFromFile(moduleFile);
-        ramList.loadFromFile(RAMModules);
+//        ramList.loadRAMFromFile(moduleFile);
+//        ramList.loadFromFile(RAMModules);
         
         //create menu
         ArrayList<String> options = new ArrayList<>();
@@ -24,13 +24,13 @@ public class RAMManagementSystem {
         options.add("Show all item");
         options.add("Store data to file");
         options.add("Quit menu");
+        ramList.list();
         
-        
-        System.out.println("====================================");
-        System.out.println("====================================");
-        System.out.println("=== Bike Store Management System ===");
-        System.out.println("====================================");
-        System.out.println("====================================");
+        System.out.println("=====================================");
+        System.out.println("=====================================");
+        System.out.println("======= RAM Management System =======");
+        System.out.println("=====================================");
+        System.out.println("=====================================");
         
         do {
             choice = int_menu(options);
