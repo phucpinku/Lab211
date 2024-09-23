@@ -37,7 +37,7 @@ public class myTool {
             System.out.println((i + 1) + ". " + opts.get(i));
         }
 
-        return readInt("Please choose an option: 1..." + N + ": ");
+        return readInt("Please choose an option: 1..." + N);
     }
 
     public static String readStr(String prompt) {
