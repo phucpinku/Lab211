@@ -122,6 +122,33 @@ public class RAMList extends ArrayList<RAMItems> {
         return false;
     }
 
+    //check valid date
+    private int[] validDate() {
+
+        int month = 0;
+        int year = 0;
+        boolean validDate = false;
+
+        while (!validDate) {
+            try {
+                System.out.print("Enter month ");
+                month = Integer.parseInt(sc.nextLine());
+                System.out.print("Enter year ");
+                year = Integer.parseInt(sc.nextLine());
+
+                if (month < 1 || month > 12 || year < 0 || year > 9999) {
+                    System.out.println("Please enter valid month and year.");
+                } else {
+                    validDate = true; // Exit the loop if the date is valid
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter numbers only");
+            }
+        }
+        return new int[]{month, year};
+
+    }
+
     //Display type for user
     private void displayType() {
         System.out.println("Available RAM type ");
@@ -130,7 +157,7 @@ public class RAMList extends ArrayList<RAMItems> {
         }
     }
 
-    //Display bus type to choose
+    //Display bus speed to choose
     private void displayBusType(String type) {
         System.out.println("Avail Bus speed for " + type + ":");
         for (RAMModule x : module) {
@@ -171,11 +198,9 @@ public class RAMList extends ArrayList<RAMItems> {
     public void createProduct() {
         String code;
         String type;
-        String bus;
         String brand;
         int quantity;
-        YearMonth product_year;
-        boolean active;
+        YearMonth product_date;
 
         type = getType();
         do {
@@ -199,20 +224,12 @@ public class RAMList extends ArrayList<RAMItems> {
         quantity = validQuantity();
         item.setQuantity(quantity);
 
-        int month, year;
-        do {
-            System.out.println("Enter month");
-            month = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Enter year");
-            year = sc.nextInt();
-            sc.nextLine();
-            if (month < 1 || month > 12 || year < 0 || year > 9999) {
-                System.out.println("Please enter valid date ");
-            }
-        } while (month < 1 || month > 12 || year < 0 || year > 9999);
-        YearMonth prod_date = YearMonth.of(year, month);
-        item.setProduct_year(prod_date);
+        int[] date = validDate();
+        int month = date[0];
+        int year = date[1];
+        
+        product_date = YearMonth.of(year, month);
+        item.setProduct_year(product_date);
         item.setCheckActive(true);
         rList.add(item);
 
@@ -231,9 +248,9 @@ public class RAMList extends ArrayList<RAMItems> {
     public void searchByBus() {
         List<RAMItems> search = new ArrayList<>();
         String busSpeed;
-        
+
         do {
-            busSpeed = readStr("Enter bus speed");
+            busSpeed = readStr("Enter bus speed to search ");
             if (!busSpeed.matches("\\d+")) { // Matches only digits
                 System.out.println("Invalid bus speed. Please enter a valid number");
             }
@@ -291,7 +308,7 @@ public class RAMList extends ArrayList<RAMItems> {
                 break;
             }
             if (!isValidType(newType)) {
-                System.out.println("Please enter valid type");
+                System.out.println("Please enter valid type ");
             }
         } while (!isValidType(newType));
         if (!newType.isEmpty() && isValidType(newType)) {
@@ -325,22 +342,25 @@ public class RAMList extends ArrayList<RAMItems> {
         }
 
         //Update quantity
-        String newQuantityStr;
-        int intQuantity = -1;
-        do {
-            newQuantityStr = readStr("Enter new Quantity ");
-            if (newQuantityStr.isEmpty()) {
-                break;
-            }
-            intQuantity = readIntFromStr(newQuantityStr);
-            if (intQuantity <= 0) {
-                System.out.println("Please enter valid quantity");
-            }
-        } while (intQuantity <= 0);
-        if (!newQuantityStr.isEmpty()) {
-            itemUpdate.setQuantity(intQuantity);
-            System.out.println("Sucess");
-        }
+//        String newQuantityStr;
+//        int intQuantity = -1;
+//        do {
+//            newQuantityStr = readStr("Enter new Quantity ");
+//            if (newQuantityStr.isEmpty()) {
+//                break;
+//            }
+//            intQuantity = readIntFromStr(newQuantityStr);
+//            if (intQuantity <= 0) {
+//                System.out.println("Please enter valid quantity");
+//            }
+//        } while (intQuantity <= 0);
+//        if (!newQuantityStr.isEmpty()) {
+//            itemUpdate.setQuantity(intQuantity);
+//            System.out.println("Sucess");
+//        }
+        int newQuantity = validQuantity(); // Get a valid quantity from the user
+        itemUpdate.setQuantity(newQuantity); // Update the quantity
+        System.out.println("Quantity updated successfully.");
 
         //Update active
         int choice = -1;
