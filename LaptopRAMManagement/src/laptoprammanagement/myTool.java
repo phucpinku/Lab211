@@ -29,7 +29,7 @@ public class myTool {
         do {
             input = readStr(prompt);
             if (!inputPattern.matcher(input).find()) {
-                System.err.println("Please enter a valid " + type);
+                System.out.println("Please enter a valid " + type);
             }
         } while (!inputPattern.matcher(input).find());
 
@@ -44,7 +44,7 @@ public class myTool {
         do {
             input = readStr(prompt);
             if (!inputPattern.matcher(input).find()) {
-                System.err.println("Please enter a valid number");
+                System.out.println("Please enter a valid number");
             }
         } while (!inputPattern.matcher(input).find());
 

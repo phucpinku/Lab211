@@ -425,6 +425,11 @@ public class RAMList extends ArrayList<RAMItems> {
             List<RAMItems> loadedItem = (List<RAMItems>) input.readObject();
             rList.clear();
             rList.addAll(loadedItem);
+
+            /* debug
+            System.out.println("Loaded successfully");
+
+             */
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
