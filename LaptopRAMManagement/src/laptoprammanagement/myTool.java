@@ -45,10 +45,6 @@ public class myTool {
         return sc.nextLine().trim();
     }
 
-    public static String readStr() {
-        return sc.nextLine().trim();
-    }
-
     public static int readInt(String prompt, String type) {
         Pattern inputPattern = Pattern.compile("\\d+");
         String input;
@@ -79,13 +75,6 @@ public class myTool {
         return (int) Math.floor(Double.parseDouble(input));
     }
 
-    public static int readIntFromStr(String input) {
-        input = input.replaceAll("\\D+", "");
-        if (input.isEmpty()) {
-            return -1;
-        } else
-            return (int) Math.floor(Double.parseDouble(input));
-    }
 
     public static String generateCode(String prefix, int length, int curNumber) {
         String formatStr = "%0" + length + "d";
@@ -97,22 +86,34 @@ public class myTool {
         return generateCode("RAM_" + type + "_", 4, curNum);
     }
 
-    public static String generateCodeFromStr(String type, int curNum) {
-        return generateCode("RAM_" + type + "_", 4, curNum);
-    }
+    public static void searchMenu(RAMList ramList, Scanner sc) {
+        int searchChoice;
+        do {
+            System.out.println("1. Search by type");
+            System.out.println("2. Search by bus speed");
+            System.out.println("3. Search by brand");
+            System.out.println("4. Back to main menu");
+            System.out.print("Enter choice: ");
 
-    public static String generateBusFromStr() {
-        int num = readInt("Enter BUS speed", "BUS speed");
-        return num + "MHZ";
-    }
+            searchChoice = sc.nextInt();
+            sc.nextLine();
 
-    public static boolean exitChoice(Object... opts) {
-        System.out.println("Do you want to: ");
-        int choice = int_menu(opts);
-        return choice == 1;
-    }
-
-    public static int getNumberInCode(String code, String prefix) {
-        return Integer.parseInt(code.substring(prefix.length()));
+            switch (searchChoice) {
+                case 1:
+                    ramList.searchByType();
+                    break;
+                case 2:
+                    ramList.searchByBus();
+                    break;
+                case 3:
+                    ramList.searchByBrand();
+                    break;
+                case 4:
+                    System.out.println("Returning to main menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (searchChoice != 4);
     }
 }

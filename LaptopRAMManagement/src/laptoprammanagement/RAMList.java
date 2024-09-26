@@ -45,7 +45,7 @@ public class RAMList extends ArrayList<RAMItems> {
         }
     }
 
-    // List for checking purpose
+    // List for debugging
     public void list() {
         module.forEach((System.out::println));
         rList.forEach(System.out::println);
@@ -109,7 +109,7 @@ public class RAMList extends ArrayList<RAMItems> {
             }
         }
         if (index == -1) {
-            System.out.println("Not found but pass the check ");
+            System.out.println("Not found");
             return false;
         }
 //        System.out.println("Checking BUs " + bus);   //debug
@@ -122,7 +122,7 @@ public class RAMList extends ArrayList<RAMItems> {
         return false;
     }
 
-    //check valid date
+    //get and check valid date
     private int[] validDate() {
 
         int month = 0;
@@ -341,23 +341,6 @@ public class RAMList extends ArrayList<RAMItems> {
             System.out.println("Success");
         }
 
-        //Update quantity
-//        String newQuantityStr;
-//        int intQuantity = -1;
-//        do {
-//            newQuantityStr = readStr("Enter new Quantity ");
-//            if (newQuantityStr.isEmpty()) {
-//                break;
-//            }
-//            intQuantity = readIntFromStr(newQuantityStr);
-//            if (intQuantity <= 0) {
-//                System.out.println("Please enter valid quantity");
-//            }
-//        } while (intQuantity <= 0);
-//        if (!newQuantityStr.isEmpty()) {
-//            itemUpdate.setQuantity(intQuantity);
-//            System.out.println("Sucess");
-//        }
         int newQuantity = validQuantity(); // Get a valid quantity from the user
         itemUpdate.setQuantity(newQuantity); // Update the quantity
         System.out.println("Quantity updated successfully.");
@@ -442,7 +425,6 @@ public class RAMList extends ArrayList<RAMItems> {
             List<RAMItems> loadedItem = (List<RAMItems>) input.readObject();
             rList.clear();
             rList.addAll(loadedItem);
-            System.out.println("Loaded successfully");
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
