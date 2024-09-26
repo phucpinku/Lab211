@@ -1,6 +1,5 @@
 package laptoprammanagement;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -8,17 +7,7 @@ public class myTool {
 
     public static final Scanner sc = new Scanner(System.in);
 
-    public static void menu(Object... opts) {
-
-        int N = opts.length;
-
-        for (int i = 0; i < N; i++) {
-            System.out.println((i + 1) + ". " + opts[i].toString());
-        }
-
-    }
-
-    public static int int_menu(Object... opts) {
+    public static int Choose(Object... opts) {
 
         int N = opts.length;
 
@@ -27,17 +16,6 @@ public class myTool {
         }
 
         return readInt("Please choose an option: 1..." + N + ": ");
-    }
-
-    public static int int_menu(ArrayList<String> opts) {
-
-        int N = opts.size();
-
-        for (int i = 0; i < N; i++) {
-            System.out.println((i + 1) + ". " + opts.get(i));
-        }
-
-        return readInt("Please choose an option: 1..." + N);
     }
 
     public static String readStr(String prompt) {
@@ -74,7 +52,6 @@ public class myTool {
 
         return (int) Math.floor(Double.parseDouble(input));
     }
-
 
     public static String generateCode(String prefix, int length, int curNumber) {
         String formatStr = "%0" + length + "d";

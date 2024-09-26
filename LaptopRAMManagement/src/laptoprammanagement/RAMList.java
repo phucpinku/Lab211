@@ -227,7 +227,7 @@ public class RAMList extends ArrayList<RAMItems> {
         int[] date = validDate();
         int month = date[0];
         int year = date[1];
-        
+
         product_date = YearMonth.of(year, month);
         item.setProduct_year(product_date);
         item.setCheckActive(true);
@@ -349,7 +349,7 @@ public class RAMList extends ArrayList<RAMItems> {
         int choice = -1;
         if (!itemUpdate.isCheckActive()) {
             System.out.println("Do you want to activate " + itemUpdate.getCode() + " ?");
-            choice = int_menu("Yes", "No");
+            choice = Choose("Yes", "No");
             if (choice == 1) {
                 itemUpdate.setCheckActive(true);
                 System.out.println("Sucess");
