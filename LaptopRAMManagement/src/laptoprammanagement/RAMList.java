@@ -29,7 +29,6 @@ public class RAMList extends ArrayList<RAMItems> {
                     continue;
                 }
 
-                String type = data[0];
                 String[] data2 = data[1].replaceAll("[\\[\\]]", "").split(", ");
 
                 RAMModule ramModule = new RAMModule();
