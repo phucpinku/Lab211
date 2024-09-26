@@ -53,14 +53,14 @@ public class myTool {
         return (int) Math.floor(Double.parseDouble(input));
     }
 
-    public static String generateCode(String prefix, int length, int curNumber) {
+    public static String generateCode(String prefix, int length, int code) {
         String formatStr = "%0" + length + "d";
-        return prefix + String.format(formatStr, curNumber);
+        return prefix + String.format(formatStr, code);
     }
 
     public static String generateCodeFromStr(String type) {
-        int curNum = readInt("Enter CODE number", "CODE number");
-        return generateCode("RAM_" + type + "_", 4, curNum);
+        int code = readInt("Enter CODE number", "CODE number");
+        return generateCode("R_" + type + "_", 4, code);
     }
 
     public static void searchMenu(RAMList ramList, Scanner sc) {

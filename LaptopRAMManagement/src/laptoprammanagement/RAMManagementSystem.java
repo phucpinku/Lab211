@@ -52,9 +52,11 @@ public class RAMManagementSystem {
                     break;
                 case 4:
                     ramList.deleteProduct();
+                    System.out.println("Exiting...");
                     break;
                 case 5:
                     ramList.displayAll();
+                    System.out.println("Exiting...");
                     break;
                 case 6:
                     ramList.saveToFile(RAMModules);
